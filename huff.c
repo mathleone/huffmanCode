@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <strings.h>
+#include "huffman.h"
 
 // int huffmanCode(C){
 // 	int n = strlen(C);
@@ -34,18 +35,8 @@ char *inputString(FILE* fp, size_t size){
     return realloc(str, sizeof(char)*len);
 }
 
-typedef struct ASCIIMap{
-	int freqVet[256];
-	int diffChar;
-}ASCIIMap;
 
-void MapAscII(char *b, ASCIIMap *Freq){
-	while(*b)
-		if(Freq->freqVet[(int)*b++]++==0)
-			Freq->diffChar++;
-		printf("\n%d caracteres diferentes\n", Freq->diffChar);
-	printf("\n");
-}
+
 
 int main(){
 	char *b = inputString(stdin, 10);
@@ -58,7 +49,6 @@ int main(){
 		Freq.freqVet[i] = 0;
 	
 	//armazena as frequencias em freqVet e conta os caracteres diferentes em diffChar
-
 	MapAscII(b, &Freq);
 	//inicializa a Heap
 	Lista *Heap = PQInit(Freq.diffChar);
@@ -76,5 +66,7 @@ int main(){
 	
 	//lista Heap
 	listar(Heap);
+	char c[8] = atoBin(c, 135);
+
 	return 0;
 }
