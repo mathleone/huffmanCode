@@ -58,11 +58,14 @@ int main(){
 			printf("%d --- %c\n", Freq.freqVet[i], i);
 		}
 	printf("\n");
-	
+	Dados min;
 	//lista Heap
 	listar(Heap);
-	while(Heap->quant > 2) treeInsert(PQDelmin(&Heap), PQDelmin(&Heap));
-	listar(Heap);
+	while(Heap->quant > 0){ 
+		min = PQDelmin(&Heap); //treeInsert(PQDelmin(&Heap), PQDelmin(&Heap));
+		printf("--- %d\n", min.priority);
+		listar(Heap);
+	}
 
 	// char *c = malloc(8*sizeof(char));
 	// c = atoBin(c, 135);

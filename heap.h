@@ -26,10 +26,9 @@ int PQIncrease(Lista**, int, Dados*);
 
 int PQInsert(Lista**, Dados*);
 
-Dados *PQDelmin(Lista**);
+Dados PQDelmin(Lista**);
 
 void PQDec(Lista**, int);
 
-int treeInsert(Dados *, Dados *);
 
 #endif // HEAP_H_INCLUDED

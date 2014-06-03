@@ -25,13 +25,14 @@ void PQDec(Lista **vet, int i){
     }
 }
 
-Dados *PQDelmin(Lista **l)
+Dados PQDelmin(Lista **l)
 {
     if((*l)->quant < 1)
-        return NULL;
-    Dados *min = &(*l)->Data[0];
+        return 0;
+    Dados min = (*l)->Data[0];
     (*l)->Data[0] = (*l)->Data[--(*l)->quant];
     PQDec(&(*l), 1);
+    printf("%d --- %c\n", min.priority, min.v);
     return min;
 }
 
@@ -59,8 +60,8 @@ int PQIncrease(Lista **l, int i, Dados *chave)
 {
     if(chave->priority > (*l)->Data[i].priority)
         return 0;
-    (*l)->Data[i].priority = chave->priority;
-    (*l)->Data[i].v = chave->v;
+    (*l)->Data[i] = *chave;
+    //(*l)->Data[i].v = chave->v;
     while(i > -1 && (*l)->Data[i/2].priority > (*l)->Data[i].priority){
         Dados Buf = (*l)->Data[i/2];
         (*l)->Data[i/2] = (*l)->Data[i];
@@ -80,9 +81,9 @@ int PQInsert(Lista **l, Dados *chave)
         return 0;
 }
 
-int treeInsert(Dados *a, Dados *b){
-    printf("%d --- %d\n", a->priority, b->priority);
-    int freq = a->priority + b->priority;
-    printf("%d\n", freq);
-    return 0;
-}
+//int treeInsert(Dados *a, Dados *b){
+//    printf("%d --- %d\n", a->priority, b->priority);
+//    int freq = a->priority + b->priority;
+//    printf("%d\n", freq);
+//    return 0;
+//}
