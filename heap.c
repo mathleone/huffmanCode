@@ -27,13 +27,13 @@ void PQDec(Lista **vet, int i){
 
 Dados PQDelmin(Lista **l)
 {
-    if((*l)->quant < 1)
-        return 0;
-    Dados min = (*l)->Data[0];
-    (*l)->Data[0] = (*l)->Data[--(*l)->quant];
-    PQDec(&(*l), 1);
-    printf("%d --- %c\n", min.priority, min.v);
-    return min;
+    if((*l)->quant >= 1){
+        Dados min = (*l)->Data[0];
+        (*l)->Data[0] = (*l)->Data[--(*l)->quant];
+        PQDec(&(*l), 1);
+        printf("--%d\n", min.priority);
+        return min;
+    }
 }
 
 void PQBuild(Lista **vet)
@@ -81,9 +81,15 @@ int PQInsert(Lista **l, Dados *chave)
         return 0;
 }
 
-//int treeInsert(Dados *a, Dados *b){
-//    printf("%d --- %d\n", a->priority, b->priority);
-//    int freq = a->priority + b->priority;
-//    printf("%d\n", freq);
-//    return 0;
-//}
+int treeInsert(Dados a, Dados b){
+    Dados *Data = malloc(sizeof(Dados)), *m1 = malloc(sizeof(Dados)), *m2 = malloc(sizeof(Dados));
+    m1->priority = a.priority;
+    m1->v = a.v;
+    m1->dir = m1->esq = m2->dir = m2->esq = NULL;
+    m2->priority = b.priority;
+    m2->v = b.v;
+    Data->priority = m1->priority + m2->priority;
+    
+    
+    return 0;
+}

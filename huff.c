@@ -54,19 +54,22 @@ int main(){
 		if(Freq.freqVet[i]){
 			Data->priority = Freq.freqVet[i];
 			Data->v = i;
+			Data->dir = Data->esq = NULL;
 			PQInsert(&Heap, Data);
 			printf("%d --- %c\n", Freq.freqVet[i], i);
 		}
 	printf("\n");
-	Dados min;
+	Dados min1, min2;
 	//lista Heap
 	listar(Heap);
-	while(Heap->quant > 0){ 
-		min = PQDelmin(&Heap); //treeInsert(PQDelmin(&Heap), PQDelmin(&Heap));
-		printf("--- %d\n", min.priority);
-		listar(Heap);
+	while(Heap->quant>1){
+		//min = PQDelmin(&Heap); //treeInsert(PQDelmin(&Heap), PQDelmin(&Heap));
+		min1 = PQDelmin(&Heap);
+		min2 = PQDelmin(&Heap);
+		printf("%d\n", min1.priority);
+		printf("%d\n", min2.priority);
+		treeInsert(min1, min2);
 	}
-
 	// char *c = malloc(8*sizeof(char));
 	// c = atoBin(c, 135);
 	// for(i=0; i<8; i++)
