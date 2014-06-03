@@ -5,6 +5,8 @@
 typedef struct Dados{
 	char v;
 	int priority;
+	struct Dados *esq;
+	struct Dados *dir;
 }Dados;
 
 typedef struct Lista{
@@ -24,8 +26,10 @@ int PQIncrease(Lista**, int, Dados*);
 
 int PQInsert(Lista**, Dados*);
 
-char PQDelmin(Lista**);
+Dados *PQDelmin(Lista**);
 
 void PQDec(Lista**, int);
+
+int treeInsert(Dados *, Dados *);
 
 #endif // HEAP_H_INCLUDED

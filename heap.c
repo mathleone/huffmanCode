@@ -25,11 +25,11 @@ void PQDec(Lista **vet, int i){
     }
 }
 
-char PQDelmin(Lista **l)
+Dados *PQDelmin(Lista **l)
 {
     if((*l)->quant < 1)
-        return 0;
-    int min = (*l)->Data[0].v;
+        return NULL;
+    Dados *min = &(*l)->Data[0];
     (*l)->Data[0] = (*l)->Data[--(*l)->quant];
     PQDec(&(*l), 1);
     return min;
@@ -78,4 +78,11 @@ int PQInsert(Lista **l, Dados *chave)
         return 1;
     else
         return 0;
+}
+
+int treeInsert(Dados *a, Dados *b){
+    printf("%d --- %d\n", a->priority, b->priority);
+    int freq = a->priority + b->priority;
+    printf("%d\n", freq);
+    return 0;
 }

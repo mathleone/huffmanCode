@@ -11,5 +11,6 @@ typedef struct ASCIIMap{
 void MapAscII(char *, ASCIIMap *);
 
 char *atoBin(char [], int);
-
+int bintoA(char []);
+int my_Pow(int, int);
 #endif

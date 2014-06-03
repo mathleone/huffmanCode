@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <strings.h>
 #include "huffman.h"
-
 // int huffmanCode(C){
 // 	int n = strlen(C);
 // 	Q = PQInit(C);
@@ -35,13 +34,9 @@ char *inputString(FILE* fp, size_t size){
     return realloc(str, sizeof(char)*len);
 }
 
-
-
-
 int main(){
 	char *b = inputString(stdin, 10);
 	int i;
-	
 	//declara o mapeamento da tabela ascii
 	ASCIIMap Freq;
 	Freq.diffChar = 0;
@@ -66,7 +61,18 @@ int main(){
 	
 	//lista Heap
 	listar(Heap);
-	char c[8] = atoBin(c, 135);
+	while(Heap->quant > 2) treeInsert(PQDelmin(&Heap), PQDelmin(&Heap));
+	listar(Heap);
+
+	// char *c = malloc(8*sizeof(char));
+	// c = atoBin(c, 135);
+	// for(i=0; i<8; i++)
+	// 	printf("%c", c[i]);
+	// int asc = bintoA(c);
+	// printf("%d\n", asc);
+		//inserir(&arvore, PQDelmin(&Heap));
+
+	//ordem(arvore);
 
 	return 0;
 }
