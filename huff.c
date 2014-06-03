@@ -68,8 +68,9 @@ int main(){
 		min2 = PQDelmin(&Heap);
 		printf("%d\n", min1.priority);
 		printf("%d\n", min2.priority);
-		treeInsert(min1, min2);
+		treeInsert(&Heap, min1, min2);
 	}
+	Dados *Raiz = PQDelmin(&Heap);
 	// char *c = malloc(8*sizeof(char));
 	// c = atoBin(c, 135);
 	// for(i=0; i<8; i++)
