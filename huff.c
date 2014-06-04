@@ -23,7 +23,22 @@ char *inputString(FILE* fp, size_t size){
 }
 
 int main(){
-	char *b = inputString(stdin, 10);
+	FILE *fp;
+	char *b;// = inputString(stdin, 10);
+
+	if ((fp = fopen("teste.txt", "r"))==NULL){
+		printf("Cannot open file \n");
+		exit(1);
+	}
+	int cnt=0;
+	while(fgetc(fp) != EOF)
+	    cnt++;
+	b = malloc(cnt*sizeof(char));
+	int c, n=0;
+	while((c=fgetc(fp) != EOF))
+		b[n++] = (char)c;
+	b[n] = '\0';
+	//char *b = fp;
 	int i;
 	//declara o mapeamento da tabela ascii
 	ASCIIMap Freq;
@@ -41,30 +56,67 @@ int main(){
 			PQInsert(&Heap, new_Dados(Freq.freqVet[i], i, NULL, NULL));
 			printf("%d --- %c\n", Freq.freqVet[i], i);
 		}
-	printf("\n");
-	Dados min1, min2;
+	//printf("\n");
 	//lista Heap
 	listar(Heap);
+	//Insere os dados da heap em uma arvore
 	while(Heap->quant>1){
-		//min = PQDelmin(&Heap); //treeInsert(PQDelmin(&Heap), PQDelmin(&Heap));
-		min1 = PQDelmin(&Heap);
-		min2 = PQDelmin(&Heap);
-		printf("%d\n", min1.priority);
-		printf("%d\n", min2.priority);
-		//treeInsert(&Heap, min1, min2);
+		PQInsert(&Heap, new_Dados(0, 'c', PQDelmin(&Heap),PQDelmin(&Heap)));
+		listar(Heap);
 	}
-	printf("\n\n");
 	listar(Heap);
-	// char *c = malloc(8*sizeof(char));
-	// c = atoBin(c, 135);
-	// for(i=0; i<8; i++)
-	// 	printf("%c", c[i]);
-	// int asc = bintoA(c);
-	// printf("%d\n", asc);
-		//inserir(&arvore, PQDelmin(&Heap));
+	char *vetCode[256] = {NULL}, code[8];
+	buildCode(Heap->Data,code, 0, vetCode);
+	for(i=0; i<255; i++)
+		if(vetCode[i]!=NULL)
+			printf("%s\n", vetCode[i]);
+	char *Encoded = malloc(8*strlen(b)*sizeof(char));
+	Encoded = huffmanEncode(b, vetCode, Encoded);
+	printf("Encoded Text: %s\n", Encoded);
+	printf("De %d para %d bits\n", ptrlen(b)*8, ptrlen(Encoded));
+	if ((fp = fopen("myfile", "w"))==NULL){
+		printf("Cannot open file \n");
+		exit(1);
+	}
+	while(*Encoded)
+	if (fwrite(Encoded++, 1, 1, fp) !=1){
+		printf("Write error occurred");
+		exit(1);
+	}
+	//char *buf = malloc(8*sizeof(char));
+	//int j, k;
+	//for(i=1; i<=ptrlen(Encoded);i+=8){
+	//	printf("%d\n", i);
+	//	j=0;
+	//	if(ptrlen(Encoded)-i+1 == ptrlen(Encoded)%8)
+	//		for(; j<8-(ptrlen(Encoded)-i+1); j++)
+	//			buf[j] = '0';
+	//	k = j;
+	//	for(; j<8; j++){
+	//		printf("%d\t%d\t%d\t%c\n", i, j, i+j-1, Encoded[(((i+j)-1)-k)]);
+	//		buf[j] = Encoded[(((i+j)-1)-k)];
+	//	}
+	//	printf("%s\n", buf);
+	//	printf("\n");
+	//}
+		//if(i==ptrlen(Encoded)/8)
+			//printf("%d --- %d\n", i, ptrlen(Encoded)-(ptrlen(Encoded)/8)+1);
+		//for(j=0; j<8; j++){
+		//	buf[j] = Encoded[i+j-1];
+		//	printf("%c", buf[j]);
+		//}
+		//for(j=0; j<(8-ptrlen(Encoded)%8==8?0:8-ptrlen(Encoded)%8); j++){
+		//	printf("%d - %d - %d\n", i, j, (8-ptrlen(Encoded)%8==8?0:8-ptrlen(Encoded)%8));
+		//	buf[j] = '0';
+		//}
+		//for(;j<8;j++){
+		//	printf("%d - %d\n", i, j);
+		//	buf[j] = Encoded[i+j];
+		//}
+	//printf("%c -- %d -- %d -- %d\n", *Encoded++, i, ptrlen(Encoded), 8-ptrlen(Encoded)%8);
 
-	//ordem(arvore);
-	printf("\n");
-	buildCode(Heap->Data);
+
+	fclose(fp);
 	return 0;
 }
+

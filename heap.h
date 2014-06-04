@@ -1,6 +1,7 @@
 #ifndef HEAP_H_INCLUDED
 #define HEAP_H_INCLUDED
 #include "heap.h"
+#include <string.h>
 
 typedef struct Dados{
 	char v;
@@ -26,9 +27,10 @@ int PQIncrease(Lista**, int, Dados*);
 
 int PQInsert(Lista**, Dados*);
 
-Dados PQDelmin(Lista**);
+Dados *PQDelmin(Lista**);
 
 void PQDec(Lista**, int);
 
+Dados *new_Dados(int , char , Dados *, Dados *);
 
 #endif // HEAP_H_INCLUDED

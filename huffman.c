@@ -34,3 +34,17 @@ int bintoA(char c[]){
 	return a;
 }
 
+char *huffmanEncode(char *b, char *vetCode[], char *encoded){
+	while(*b)
+		strcat(encoded, vetCode[(int)*b++]);
+		//printf("%s\n", vetCode[(int)*b]);
+	printf("\n");
+	return encoded;
+}
+
+ptrlen(char *ptr){
+	int i=0;
+	while(*ptr)
+		i++, *ptr++;
+	return i;
+}
