@@ -1,21 +1,9 @@
 #include "heap.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <strings.h>
+#include <string.h>
 #include "huffman.h"
-// int huffmanCode(C){
-// 	int n = strlen(C);
-// 	Q = PQInit(C);
-// 	Node *z;
-// 	for(i=0; i<n; i++){
-// 		z = malloc(sizeof(Node));
-// 		z->left = x = PQDelmin(Q);
-// 		z->right = y = PQDelmin(Q);
-// 		f[z] = f[x] + f[y];
-// 		PQInsert(Q, z);
-// 	}
-// 	return PQDelmin(Q);
-// }
+
 char *inputString(FILE* fp, size_t size){
     char *str;
     int ch;
@@ -42,20 +30,15 @@ int main(){
 	Freq.diffChar = 0;
 	for(i=0;i<256;i++)
 		Freq.freqVet[i] = 0;
-	
 	//armazena as frequencias em freqVet e conta os caracteres diferentes em diffChar
 	MapAscII(b, &Freq);
 	//inicializa a Heap
 	Lista *Heap = PQInit(Freq.diffChar);
-	
 	//Insere os dados na Heap
 	Dados *Data = malloc(sizeof(Dados));
 	for(i=0;i<256;i++)
 		if(Freq.freqVet[i]){
-			Data->priority = Freq.freqVet[i];
-			Data->v = i;
-			Data->dir = Data->esq = NULL;
-			PQInsert(&Heap, Data);
+			PQInsert(&Heap, new_Dados(Freq.freqVet[i], i, NULL, NULL));
 			printf("%d --- %c\n", Freq.freqVet[i], i);
 		}
 	printf("\n");
@@ -68,9 +51,10 @@ int main(){
 		min2 = PQDelmin(&Heap);
 		printf("%d\n", min1.priority);
 		printf("%d\n", min2.priority);
-		treeInsert(&Heap, min1, min2);
+		//treeInsert(&Heap, min1, min2);
 	}
-	Dados *Raiz = PQDelmin(&Heap);
+	printf("\n\n");
+	listar(Heap);
 	// char *c = malloc(8*sizeof(char));
 	// c = atoBin(c, 135);
 	// for(i=0; i<8; i++)
@@ -80,6 +64,7 @@ int main(){
 		//inserir(&arvore, PQDelmin(&Heap));
 
 	//ordem(arvore);
-
+	printf("\n");
+	buildCode(Heap->Data);
 	return 0;
 }

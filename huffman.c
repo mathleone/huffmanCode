@@ -33,3 +33,4 @@ int bintoA(char c[]){
 	}
 	return a;
 }
+

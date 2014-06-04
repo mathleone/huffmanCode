@@ -81,28 +81,24 @@ int PQInsert(Lista **l, Dados *chave)
         return 0;
 }
 
-int treeInsert(Lista **l, Dados a, Dados b){
-    Dados *Data = malloc(sizeof(Dados)), *m1 = malloc(sizeof(Dados)), *m2 = malloc(sizeof(Dados));
-    m1->priority = a.priority;
-    m1->v = a.v;
-    m1->dir = a.dir; 
-    m1->esq = a.esq;
-    m2->dir = b.dir;
-    m2->esq = b.esq;
-    m2->priority = b.priority;
-    m2->v = b.v;
-    Data->priority = m1->priority + m2->priority;
-    Data->dir = m1->priority > m2->priority ? m1 : m2;
-    Data->esq = m1->priority <= m2->priority ? m2 : m1;
-    PQInsert(&(*l), Data);
-    printf("\n\n%d\n\n", Data->priority);
-    return 0;
+
+void buildCode(Dados *l){
+    if(l != NULL){
+        buildCode(l->esq);
+        printf("--%c\n", l->v);
+        buildCode(l->dir);
+    }
 }
 
-void ordem(Dados raiz){
-    if(raiz != NULL){
-        ordem(raiz.esq);
-        printf("%d --- %d\n", raiz.priority, raiz.v);
-        ordem(raiz.dir);
+Dados *new_Dados(int priority, char c, Dados *a, Dados *b){
+    Dados *Data = malloc(sizeof(Dados));
+    if(priority){
+        Data->v = c; Data->priority = priority;
     }
+    else {
+        Data->esq = a;
+        Data->dir = b;
+        Data->priority = a->priority + b->priority;
+    }
+    return Data;
 }
